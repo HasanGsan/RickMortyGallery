@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">GalleryApp</string>
+    <string name="app_blank_new">New</string>
+    <string name="app_blank_popular">Popular</string>
+</resources>
