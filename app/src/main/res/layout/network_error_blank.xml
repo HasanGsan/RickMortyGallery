@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#ffffff"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/oh_snucks_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/network_error_image"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginBottom="350dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+    </ImageView>
+
+    <TextView
+        android:id="@+id/oh_snucks_text_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/network_error_title"
+        android:textSize="30sp"
+        android:textColor="@color/blue"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/oh_snucks_img"
+        app:layout_constraintRight_toRightOf="parent">
+    </TextView>
+
+    <TextView
+        android:id="@+id/oh_snucks_text_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/network_error_description"
+        android:textSize="20sp"
+        android:textAlignment="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/oh_snucks_text_title"
+        app:layout_constraintRight_toRightOf="parent">
+    </TextView>
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

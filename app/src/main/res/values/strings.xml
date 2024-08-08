@@ -2,4 +2,8 @@
     <string name="app_name">GalleryApp</string>
     <string name="app_blank_new">New</string>
     <string name="app_blank_popular">Popular</string>
+    <string name="popup_title">Get better - unused exploration</string>
+    <string name="popup_description">Initial design explorations for a online health and wellness\nplatform that unfortunately never made it into the product.\nThough this was unused work, Have been contemplating on\ncreating a few more of them.</string>
+    <string name="network_error_title">Oh shucks!</string>
+    <string name="network_error_description">Slow or no internet connection.\nPlease check your internet settings</string>
 </resources>

@@ -8,11 +8,11 @@
     <fragment
         android:id="@+id/newFragment"
         android:name="com.example.galleryapp.NewFragment"
-        android:label="fragment_new"
+        android:label="New"
         tools:layout="@layout/fragment_new" />
     <fragment
         android:id="@+id/popularFragment"
         android:name="com.example.galleryapp.PopularFragment"
-        android:label="fragment_popular"
+        android:label="Popular"
         tools:layout="@layout/fragment_popular" />
 </navigation>

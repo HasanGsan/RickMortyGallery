@@ -2,5 +2,6 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="oh_snucks_bck"></color>
     <color name="blue">#2F1767</color>
 </resources>
