@@ -1,22 +1,22 @@
 package com.example.galleryapp
 
-import android.media.Image
 import android.os.Bundle
-import android.widget.ImageView
-import android.widget.Toolbar
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.galleryapp.databinding.ActivityMainBinding
-import com.example.network.ApiService
+import com.example.network.ConnectivityObserver
+import com.example.network.NetworkConnectivityObserver
+import com.example.retrofit.ApiService
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -27,10 +27,14 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
 
+
+
+    //Проверка интернета
     private lateinit var networkBlank: ConstraintLayout
 
+    private lateinit var connectivityObserver: ConnectivityObserver
 
-    private lateinit var apiService: ApiService
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,9 +43,15 @@ class MainActivity : AppCompatActivity() {
 
 
         binding = ActivityMainBinding.inflate(layoutInflater)
+
+//        Получение зависимостей
+
+
+
         setContentView(binding.root)
 
         networkBlank = findViewById(R.id.network_include)
+        connectivityObserver = NetworkConnectivityObserver(applicationContext)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -56,18 +66,34 @@ class MainActivity : AppCompatActivity() {
         //navigation code
 
 
-        //Проверка интернета
-        networkBlank = findViewById(R.id.network_include)
 
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://rickandmortyapi.com/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
 
-        apiService = retrofit.create(ApiService::class.java)
+        //Проверка интернета после запуска
+        val currentStatus =  (connectivityObserver as NetworkConnectivityObserver)  .getCurrentStatus()
+        networkBlank.visibility = if(currentStatus == ConnectivityObserver.Status.Available){
+            ConstraintLayout.GONE
+        }
+        else{
+            ConstraintLayout.VISIBLE
+        }
 
-        checkInternetConnection()
-        //Проверка интернета
+        //Ассинхронная проверка интернета
+        lifecycleScope.launch {
+            connectivityObserver.observe().collect { status ->
+                when(status){
+                    ConnectivityObserver.Status.Available -> {
+                        networkBlank.visibility = ConstraintLayout.GONE
+                    }
+                    else -> {
+                        networkBlank.visibility = ConstraintLayout.VISIBLE
+                    }
+                }
+
+            }
+        }
+
+
+
 
         //Навигационное названия на страницах
         setSupportActionBar(binding.customToolBar)
@@ -81,19 +107,9 @@ class MainActivity : AppCompatActivity() {
         }
         //Навигационное названия на страницах
 
+
+
+
     }
 
-
-    //Функция отображения страницы network_error
-    private fun checkInternetConnection(){
-        apiService.testConnection().enqueue(object: Callback<Unit> {
-            override fun onResponse(p0: Call<Unit>, p1: Response<Unit>) {
-                networkBlank.visibility = ConstraintLayout.GONE
-            }
-
-            override fun onFailure(p0: Call<Unit>, p1: Throwable) {
-                networkBlank.visibility = ConstraintLayout.VISIBLE
-            }
-        })
-    }
 }
