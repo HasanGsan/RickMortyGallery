@@ -1,4 +1,4 @@
-package com.example.galleryapp
+package com.example.galleryapp.main
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -11,17 +11,12 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.galleryapp.R
 import com.example.galleryapp.databinding.ActivityMainBinding
 import com.example.network.ConnectivityObserver
 import com.example.network.NetworkConnectivityObserver
-import com.example.retrofit.ApiService
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
 

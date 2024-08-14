@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id ("kotlin-kapt")
 }
 
 android {
@@ -41,6 +42,11 @@ android {
 
 dependencies {
 
+    //converter
+    implementation (libs.github.glide)
+    kapt(libs.compiler)
+
+
 
     //retrofit
     implementation (libs.retrofit)
@@ -53,7 +59,7 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.navigation.fragment.ktx)
 
-    
+
 
     //all impl
     implementation(libs.androidx.core.ktx)
