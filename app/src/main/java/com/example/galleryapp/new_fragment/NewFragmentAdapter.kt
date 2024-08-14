@@ -9,16 +9,19 @@ import com.bumptech.glide.Glide
 import com.example.galleryapp.R
 import com.example.galleryapp.data.ResultCharacter
 
-class NewFragmentAdapter(private var characters: List<ResultCharacter>) :
+class NewFragmentAdapter(private var characters: List<ResultCharacter> = emptyList()) :
     RecyclerView.Adapter<NewFragmentAdapter.NewFragmentViewHolder>() {
 
+//todo убери itemView.findViewById и замени на viewBinding
 
     inner class NewFragmentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val imageView = itemView.findViewById<ImageView>(R.id.imageView)
 
         fun bind(character: ResultCharacter){
+            println("fun bind(character: ResultCharacter){ ${character.image}")
             Glide.with(itemView.context)
                 .load(character.image)
+                .placeholder(R.drawable.test_frame)
                 .into(imageView)
         }
     }
@@ -41,6 +44,4 @@ class NewFragmentAdapter(private var characters: List<ResultCharacter>) :
         characters = newCharacters
         notifyDataSetChanged() //уведа об изменении
     }
-
-
 }
