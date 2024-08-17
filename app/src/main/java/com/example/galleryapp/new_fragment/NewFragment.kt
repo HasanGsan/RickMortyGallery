@@ -1,5 +1,6 @@
 package com.example.galleryapp.new_fragment
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -35,16 +36,23 @@ class NewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.rcViewNew.layoutManager = GridLayoutManager(context, 2)
+        val spanCount = if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
+            3
+        }
+        else{
+            2
+        }
+
+        binding.rcViewNew.layoutManager = GridLayoutManager(context, spanCount)
         val adapter = NewFragmentAdapter()
         binding.rcViewNew.adapter = adapter
 
         lifecycleScope.launch {
-                viewModel.uiState.collect {
-                    println("collect state $it")
-                    adapter.updateData(it.pictureList)
-                    println("IsLoading ${it.isLoading}")
-                }
+            viewModel.uiState.collect {
+                println("collect state $it")
+                adapter.updateData(it.pictureList)
+                println("IsLoading ${it.isLoading}")
+            }
         }
     }
 
@@ -53,4 +61,3 @@ class NewFragment : Fragment() {
         _binding = null
     }
 }
-

@@ -8,28 +8,25 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.galleryapp.R
 import com.example.galleryapp.data.ResultCharacter
+import com.example.galleryapp.databinding.ItemCharacterBinding
 
 class NewFragmentAdapter(private var characters: List<ResultCharacter> = emptyList()) :
     RecyclerView.Adapter<NewFragmentAdapter.NewFragmentViewHolder>() {
 
-//todo убери itemView.findViewById и замени на viewBinding
-
-    inner class NewFragmentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val imageView = itemView.findViewById<ImageView>(R.id.imageView)
+    inner class NewFragmentViewHolder(private val bindingImg: ItemCharacterBinding) : RecyclerView.ViewHolder(bindingImg.root) {
 
         fun bind(character: ResultCharacter){
             println("fun bind(character: ResultCharacter){ ${character.image}")
-            Glide.with(itemView.context)
+            Glide.with(bindingImg.root)
                 .load(character.image)
-                .placeholder(R.drawable.test_frame)
-                .into(imageView)
+                .placeholder(R.drawable.ic_launcher_foreground)
+                .into(bindingImg.imageView)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewFragmentAdapter.NewFragmentViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_character, parent, false)
-        return NewFragmentViewHolder(view)
+        val binding = ItemCharacterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return NewFragmentViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: NewFragmentAdapter.NewFragmentViewHolder, position: Int) {
