@@ -7,4 +7,7 @@ import retrofit2.http.GET
 interface ApiService {
     @GET("character/?name=rick&status=alive")
     fun getAliveCharacters(): Call<RickAndMortyInfo>
+
+    @GET("character/?name=rick&status=dead")
+    fun getDeadCharacters(): Call<RickAndMortyInfo>
 }
