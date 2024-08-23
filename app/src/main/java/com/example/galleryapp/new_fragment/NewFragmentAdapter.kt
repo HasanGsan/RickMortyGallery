@@ -3,6 +3,7 @@ package com.example.galleryapp.new_fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView.OnItemClickListener
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -10,8 +11,10 @@ import com.example.galleryapp.R
 import com.example.galleryapp.data.ResultCharacter
 import com.example.galleryapp.databinding.ItemCharacterBinding
 
-class NewFragmentAdapter(private var characters: List<ResultCharacter> = emptyList()) :
-    RecyclerView.Adapter<NewFragmentAdapter.NewFragmentViewHolder>() {
+class NewFragmentAdapter(
+    private var characters: List<ResultCharacter> = emptyList(),
+    private val onItemClicked: (ResultCharacter) -> Unit
+    ) : RecyclerView.Adapter<NewFragmentAdapter.NewFragmentViewHolder>() {
 
     inner class NewFragmentViewHolder(private val bindingImg: ItemCharacterBinding) : RecyclerView.ViewHolder(bindingImg.root) {
 
@@ -21,7 +24,16 @@ class NewFragmentAdapter(private var characters: List<ResultCharacter> = emptyLi
                 .load(character.image)
                 .placeholder(R.drawable.ic_launcher_foreground)
                 .into(bindingImg.imageView)
+
+            bindingImg.root.setOnClickListener { //Слушатель кликов
+                onItemClicked(character)
+            }
+
         }
+
+
+
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewFragmentAdapter.NewFragmentViewHolder {

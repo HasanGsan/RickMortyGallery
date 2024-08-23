@@ -9,10 +9,33 @@
         android:id="@+id/newFragment"
         android:name="com.example.galleryapp.new_fragment.NewFragment"
         android:label="New"
-        tools:layout="@layout/fragment_new" />
+        tools:layout="@layout/fragment_new" >
+
+
+        <action
+            android:id="@+id/action_newFragment_to_detailFragment"
+            app:destination="@id/detailFragment">
+
+            <argument
+                android:name="image"
+                app:argType="string" />
+
+
+            <argument
+                android:name="description"
+                app:argType="string" />
+        </action>
+    </fragment>
+
     <fragment
         android:id="@+id/popularFragment"
         android:name="com.example.galleryapp.popular_fragment.PopularFragment"
         android:label="Popular"
         tools:layout="@layout/fragment_popular" />
+
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.example.galleryapp.detailFragment.DetailFragment"
+        android:label="Detail"
+        tools:layout="@layout/popup_window" />
 </navigation>

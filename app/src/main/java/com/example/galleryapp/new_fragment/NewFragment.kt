@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.galleryapp.R
 import com.example.galleryapp.databinding.FragmentNewBinding
 import kotlinx.coroutines.launch
 
@@ -44,7 +46,17 @@ class NewFragment : Fragment() {
         }
 
         binding.rcViewNew.layoutManager = GridLayoutManager(context, spanCount)
-        val adapter = NewFragmentAdapter()
+
+
+        val adapter = NewFragmentAdapter { selectedCharacter ->
+            val bundle = Bundle().apply {
+                putString("image", selectedCharacter.image)
+                putString("description", selectedCharacter.name)
+            }
+            findNavController().navigate(R.id.action_newFragment_to_detailFragment, bundle)
+
+        }
+
         binding.rcViewNew.adapter = adapter
 
         lifecycleScope.launch {
