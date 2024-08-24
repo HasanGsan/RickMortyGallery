@@ -9,19 +9,27 @@ import com.example.galleryapp.data.ResultCharacter
 import com.example.galleryapp.databinding.ItemCharacterBinding
 
 
-class PopularFragmentAdapter(private var characters: List<ResultCharacter> = emptyList()) :
- RecyclerView.Adapter<PopularFragmentAdapter.PopularFragmentViewHolder>()  {
+class PopularFragmentAdapter(
+    private var characters: List<ResultCharacter> = emptyList(),
+    private val onItemClicked: (ResultCharacter) -> Unit
+) : RecyclerView.Adapter<PopularFragmentAdapter.PopularFragmentViewHolder>()  {
 
     inner class PopularFragmentViewHolder(private val bindingImg: ItemCharacterBinding) : RecyclerView.ViewHolder(bindingImg.root) {
 
-        fun bind(character: ResultCharacter){
+        fun bind(character: ResultCharacter) {
             println("fun bind(character: ResultCharacter){ ${character.image}")
             Glide.with(bindingImg.root)
                 .load(character.image)
                 .placeholder(R.drawable.ic_launcher_foreground)
                 .into(bindingImg.imageView)
+
+            bindingImg.root.setOnClickListener { //Слушатель кликов
+                onItemClicked(character)
+            }
+
         }
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PopularFragmentAdapter.PopularFragmentViewHolder {
         val binding = ItemCharacterBinding.inflate(LayoutInflater.from(parent.context), parent, false)

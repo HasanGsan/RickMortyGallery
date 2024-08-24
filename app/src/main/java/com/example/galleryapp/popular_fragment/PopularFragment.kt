@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.galleryapp.R
 import com.example.galleryapp.databinding.FragmentNewBinding
@@ -34,7 +35,6 @@ class PopularFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
 
         _binding =  FragmentPopularBinding.inflate(inflater, container, false)
 
@@ -52,7 +52,17 @@ class PopularFragment : Fragment() {
         }
 
         binding.rcViewPopular.layoutManager = GridLayoutManager(context, spanCount)
-        val adapter = PopularFragmentAdapter()
+
+
+        val adapter = NewFragmentAdapter { selectedCharacter ->
+            val bundle = Bundle().apply {
+                putString("image", selectedCharacter.image)
+                putString("description", selectedCharacter.name)
+            }
+            findNavController().navigate(R.id.action_popularFragment_to_detailFragment, bundle)
+
+        }
+
         binding.rcViewPopular.adapter = adapter
 
         lifecycleScope.launch {

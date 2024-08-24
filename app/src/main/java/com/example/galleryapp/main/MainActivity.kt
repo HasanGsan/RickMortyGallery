@@ -54,12 +54,14 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+
         //navigation code
         val btnNavView = findViewById<BottomNavigationView>(R.id.bottom_navigation_bar)
         val controller = findNavController(R.id.fragmentContainerView)
         btnNavView.setupWithNavController(controller)
         //navigation code
 
+        // Получаем ActionBar
 
 
 

@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
+import com.example.galleryapp.R
 import com.example.galleryapp.databinding.FragmentNewBinding
 import com.example.galleryapp.databinding.PopupWindowBinding
 
@@ -35,8 +36,13 @@ class DetailFragment : Fragment() {
         val supportActionBar = (activity as? AppCompatActivity)?.supportActionBar //общая переменная для настройки
 
         supportActionBar?.apply {
+            setHomeAsUpIndicator(R.drawable.arrow_back) //Установка единого стиля стрелки
+        }
+
+        supportActionBar?.apply {
             setDisplayShowTitleEnabled(false)
             setDisplayHomeAsUpEnabled(true)
+
         }
     }
 
