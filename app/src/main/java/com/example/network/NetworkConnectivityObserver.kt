@@ -10,10 +10,10 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 
-class NetworkConnectivityObserver (
+class NetworkConnectivityObserver(
     private val context: Context
 ) : ConnectivityObserver {
-    private  val connectivityManager =
+    private val connectivityManager =
         context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
     override fun observe(): Flow<ConnectivityObserver.Status> {
@@ -48,21 +48,22 @@ class NetworkConnectivityObserver (
                 }
             }
             connectivityManager.registerDefaultNetworkCallback(callback)
-            awaitClose{
+            awaitClose {
                 connectivityManager.unregisterNetworkCallback(callback)
             }
         }.distinctUntilChanged()
     }
 
-    //Функция для проверки интернета при входе
     fun getCurrentStatus(): ConnectivityObserver.Status {
-        val networkCapabilities = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
-        return if (networkCapabilities != null && networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)) {
-            ConnectivityObserver.Status.Available
-        }
-        else{
+        return try {
+            val network = connectivityManager.activeNetwork
+            if (network != null && connectivityManager.getNetworkCapabilities(network)?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true) {
+                ConnectivityObserver.Status.Available
+            } else {
+                ConnectivityObserver.Status.Unavailable
+            }
+        } catch (e: Exception) {
             ConnectivityObserver.Status.Unavailable
         }
     }
-
 }

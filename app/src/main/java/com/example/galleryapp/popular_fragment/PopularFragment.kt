@@ -11,10 +11,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.galleryapp.R
-import com.example.galleryapp.databinding.FragmentNewBinding
 import com.example.galleryapp.databinding.FragmentPopularBinding
 import com.example.galleryapp.new_fragment.NewFragmentAdapter
-import com.example.galleryapp.new_fragment.NewViewModel
 import kotlinx.coroutines.launch
 
 

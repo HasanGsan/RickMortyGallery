@@ -54,7 +54,6 @@ class NewFragment : Fragment() {
                 putString("description", selectedCharacter.name)
             }
             findNavController().navigate(R.id.action_newFragment_to_detailFragment, bundle)
-
         }
 
         binding.rcViewNew.adapter = adapter
