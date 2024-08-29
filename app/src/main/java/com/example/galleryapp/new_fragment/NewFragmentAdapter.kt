@@ -12,7 +12,7 @@ import com.example.galleryapp.databinding.ItemCharacterBinding
 
 class NewFragmentAdapter(
     private var characters: List<ResultCharacter> = emptyList(),
-    private val onItemClicked: (ResultCharacter) -> Unit
+    private val onItemClicked: (ResultCharacter) -> Unit,
     ) : RecyclerView.Adapter<NewFragmentAdapter.NewFragmentViewHolder>() {
 
     inner class NewFragmentViewHolder(private val bindingImg: ItemCharacterBinding) : RecyclerView.ViewHolder(bindingImg.root) {
@@ -34,10 +34,8 @@ class NewFragmentAdapter(
 
         }
 
-
-
-
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewFragmentAdapter.NewFragmentViewHolder {
         val binding = ItemCharacterBinding.inflate(LayoutInflater.from(parent.context), parent, false)

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.example.galleryapp.R
 import com.example.galleryapp.databinding.PopupWindowBinding
 
 class DetailViewModel(private val state: SavedStateHandle) : ViewModel() {
@@ -45,5 +46,7 @@ class DetailViewModel(private val state: SavedStateHandle) : ViewModel() {
     fun onBackButton() {
         _isBackButton.value = true
     }
+
+
 
 }

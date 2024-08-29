@@ -3,6 +3,7 @@ package com.example.galleryapp.detailFragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
@@ -22,6 +23,8 @@ class DetailFragment : Fragment() {
 
     private val viewModel: DetailViewModel by viewModels()
 
+    private  val supportActionBar = (activity as? AppCompatActivity)?.supportActionBar
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,36 +33,14 @@ class DetailFragment : Fragment() {
         return binding.root
     }
 
-    override fun onResume() { //Сокрытие заголовка и отображение кнопки назад
-        super.onResume()
 
-        val supportActionBar = (activity as? AppCompatActivity)?.supportActionBar //общая переменная для настройки
-
-        supportActionBar?.apply {
-            setHomeAsUpIndicator(R.drawable.arrow_back) //Установка единого стиля стрелки
-        }
-
-        supportActionBar?.apply {
-            setDisplayShowTitleEnabled(false)
-            setDisplayHomeAsUpEnabled(true)
-
-        }
-    }
-
-    override fun onPause() {
-        super.onPause()
-
-        val supportActionBar = (activity as? AppCompatActivity)?.supportActionBar //общая переменная для настройки
-
-        supportActionBar?.apply { // Сокрытие кнопки назад и отображение заголвока
-            setDisplayShowTitleEnabled(true)
-            setDisplayHomeAsUpEnabled(false)
-        }
-    }
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+            binding.backButton.setOnClickListener {
+                requireActivity().onBackPressed()
+            }
 
             val image = viewModel.image
             val description = viewModel.description
@@ -70,6 +51,20 @@ class DetailFragment : Fragment() {
 
             binding.titleWindowText.text = description
     }
+
+    //TODO реализовать кастомную back_arrow правильно 
+
+    override fun onResume() {
+        super.onResume()
+        (activity as? AppCompatActivity)?.supportActionBar?.hide()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        (activity as? AppCompatActivity)?.supportActionBar?.show()
+    }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()

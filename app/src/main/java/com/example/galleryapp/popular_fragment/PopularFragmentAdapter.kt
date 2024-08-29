@@ -28,8 +28,7 @@ class PopularFragmentAdapter(
                     .into(bindingImg.imageView)
 
 
-
-            bindingImg.root.setOnClickListener { //Слушатель кликов
+            bindingImg.root.setOnClickListener { //Слушатель кликов к постам
                 onItemClicked(character)
             }
 

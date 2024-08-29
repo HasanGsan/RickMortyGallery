@@ -10,8 +10,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-
-
 data class NewFragmentUiState(
     val pictureList: List<ResultCharacter> = emptyList(),
     val isLoading: Boolean = false,

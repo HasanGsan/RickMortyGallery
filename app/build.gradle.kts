@@ -42,6 +42,11 @@ android {
 
 dependencies {
 
+    //paging
+    implementation (libs.androidx.paging.runtime.ktx)
+
+
+
     //converter
     implementation (libs.github.glide)
     kapt(libs.compiler)
