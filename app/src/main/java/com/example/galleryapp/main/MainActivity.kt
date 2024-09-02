@@ -1,6 +1,7 @@
 package com.example.galleryapp.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +20,8 @@ import com.example.network.ConnectivityObserver
 import com.example.network.NetworkConnectivityObserver
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
+import okhttp3.OkHttpClient
+import okhttp3.Request
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,7 +31,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var networkBlank: ConstraintLayout
 
     private lateinit var connectivityObserver: ConnectivityObserver
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -97,6 +99,8 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+
+
 
 
 

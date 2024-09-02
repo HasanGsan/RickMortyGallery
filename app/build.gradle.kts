@@ -43,12 +43,13 @@ android {
 dependencies {
 
     //paging
-    implementation (libs.androidx.paging.runtime.ktx)
+    implementation(libs.androidx.paging.runtime.ktx)
 
 
 
     //converter
     implementation (libs.github.glide)
+    implementation(libs.androidx.swiperefreshlayout)
     kapt(libs.compiler)
 
 

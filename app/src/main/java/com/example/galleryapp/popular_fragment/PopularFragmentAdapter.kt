@@ -4,28 +4,33 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.galleryapp.R
 import com.example.galleryapp.data.ResultCharacter
 import com.example.galleryapp.databinding.ItemCharacterBinding
+import com.example.galleryapp.new_fragment.NewFragmentAdapter
 
 
 class PopularFragmentAdapter(
-    private var characters: List<ResultCharacter> = emptyList(),
     private val onItemClicked: (ResultCharacter) -> Unit,
-) : RecyclerView.Adapter<PopularFragmentAdapter.PopularFragmentViewHolder>()  {
+) : PagingDataAdapter<ResultCharacter, PopularFragmentAdapter.PopularFragmentViewHolder>(
+    DiffCallback
+) {
 
-    inner class PopularFragmentViewHolder(private val bindingImg: ItemCharacterBinding) : RecyclerView.ViewHolder(bindingImg.root) {
+    inner class PopularFragmentViewHolder(private val bindingImg: ItemCharacterBinding) :
+        RecyclerView.ViewHolder(bindingImg.root) {
 
         fun bind(character: ResultCharacter) {
             println("fun bind(character: ResultCharacter){ ${character.image}")
 
-                Glide.with(bindingImg.root)
-                    .load(character.image)
-                    .placeholder(R.drawable.ic_launcher_foreground)
-                    .error(R.drawable.ic_launcher_foreground)
-                    .into(bindingImg.imageView)
+            Glide.with(bindingImg.root)
+                .load(character.image)
+                .placeholder(R.drawable.ic_launcher_foreground)
+                .error(R.drawable.ic_launcher_foreground)
+                .into(bindingImg.imageView)
 
 
             bindingImg.root.setOnClickListener { //Слушатель кликов к постам
@@ -36,22 +41,36 @@ class PopularFragmentAdapter(
     }
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PopularFragmentAdapter.PopularFragmentViewHolder {
-        val binding = ItemCharacterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): PopularFragmentAdapter.PopularFragmentViewHolder {
+        val binding =
+            ItemCharacterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return PopularFragmentViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: PopularFragmentAdapter.PopularFragmentViewHolder, position: Int) {
-        holder.bind(characters[position])
+    override fun onBindViewHolder(
+        holder: PopularFragmentAdapter.PopularFragmentViewHolder,
+        position: Int
+    ) {
+        val character = getItem(position)
+        if (character != null) {
+            holder.bind(character)
+        }
     }
 
-    override fun getItemCount(): Int {
-        return characters.size
-    }
+    companion object DiffCallback : DiffUtil.ItemCallback<ResultCharacter>() {
+        override fun areItemsTheSame(oldItem: ResultCharacter, newItem: ResultCharacter): Boolean {
+            return oldItem.id == newItem.id
+        }
 
-    fun updateData(newCharacters: List<ResultCharacter>){
-        characters = newCharacters
-        notifyDataSetChanged() //уведа об изменении
+        override fun areContentsTheSame(
+            oldItem: ResultCharacter,
+            newItem: ResultCharacter
+        ): Boolean {
+            return oldItem == newItem
+        }
     }
 
 }

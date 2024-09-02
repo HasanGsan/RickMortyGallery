@@ -7,12 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.galleryapp.R
 import com.example.galleryapp.databinding.FragmentPopularBinding
 import com.example.galleryapp.new_fragment.NewFragmentAdapter
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 
@@ -23,36 +28,33 @@ class PopularFragment : Fragment() {
         get() = _binding!!
 
     private val viewModel: PopularViewModel by viewModels()
+    private lateinit var adapter: PopularFragmentAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.getPicture()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding =  FragmentPopularBinding.inflate(inflater, container, false)
-
+        _binding = FragmentPopularBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val spanCount = if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
-            3
-        }
-        else{
-            2
-        }
+        val spanCount =
+            if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                3
+            } else {
+                2
+            }
 
         binding.rcViewPopular.layoutManager = GridLayoutManager(context, spanCount)
 
 
-        val adapter = NewFragmentAdapter { selectedCharacter ->
+        adapter = PopularFragmentAdapter { selectedCharacter ->
+            // Если пост был просмотрен, обрабатываем
             val bundle = Bundle().apply {
                 putString("image", selectedCharacter.image)
                 putString("description", selectedCharacter.name)
@@ -63,13 +65,34 @@ class PopularFragment : Fragment() {
 
         binding.rcViewPopular.adapter = adapter
 
-        lifecycleScope.launch {
-            viewModel.uiState.collect {
-                println("collect state $it")
-                adapter.updateData(it.pictureList)
-                println("IsLoading ${it.isLoading}")
+        // Добавляем слушатель для подгрузки данных при прокрутке вниз
+
+        binding.rcViewPopular.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (!binding.rcViewPopular.canScrollVertically(1) && dy > 0) {
+                    binding.popularProgressBar.visibility = View.VISIBLE
+                    adapter.retry()
+                }
+            }
+        })
+
+        adapter.addLoadStateListener { loadState -> //Состояния Popular Progress Bar
+            when (loadState.source.refresh) {
+                is LoadState.Loading -> binding.popularProgressBar.visibility = View.VISIBLE
+                is LoadState.NotLoading -> binding.popularProgressBar.visibility = View.GONE
+                is LoadState.Error -> binding.popularProgressBar.visibility = View.GONE
             }
         }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.characters.collectLatest { pagingData ->
+                    adapter.submitData(pagingData)
+                }
+            }
+        }
+
     }
 
     override fun onDestroyView() {
