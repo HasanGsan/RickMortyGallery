@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.example.galleryapp.R
 import com.example.galleryapp.databinding.FragmentNewBinding
 import com.example.galleryapp.databinding.PopupWindowBinding
@@ -45,8 +47,10 @@ class DetailFragment : Fragment() {
             val image = viewModel.image
             val description = viewModel.description
 
+
             Glide.with(this)
                 .load(image)
+                .placeholder(R.drawable.ic_launcher_foreground)
                 .into(binding.windowToImage)
 
             binding.titleWindowText.text = description

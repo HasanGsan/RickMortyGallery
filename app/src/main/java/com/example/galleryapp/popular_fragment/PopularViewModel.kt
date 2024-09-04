@@ -1,6 +1,5 @@
 package com.example.galleryapp.popular_fragment
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
@@ -10,11 +9,7 @@ import androidx.paging.cachedIn
 import com.example.galleryapp.api.RetrofitClient
 import com.example.galleryapp.data.ResultCharacter
 import com.example.galleryapp.popular_fragment.popular_paging.PopularPagingSource
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 
 
 class PopularViewModel : ViewModel() {

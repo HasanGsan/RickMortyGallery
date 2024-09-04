@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -29,6 +30,7 @@ class PopularFragment : Fragment() {
 
     private val viewModel: PopularViewModel by viewModels()
     private lateinit var adapter: PopularFragmentAdapter
+
 
 
     override fun onCreateView(
@@ -70,7 +72,7 @@ class PopularFragment : Fragment() {
         binding.rcViewPopular.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                if (!binding.rcViewPopular.canScrollVertically(1) && dy > 0) {
+                if (!binding.rcViewPopular.canScrollVertically(1) && dy > 0 ) {
                     binding.popularProgressBar.visibility = View.VISIBLE
                     adapter.retry()
                 }
@@ -79,10 +81,22 @@ class PopularFragment : Fragment() {
 
         adapter.addLoadStateListener { loadState -> //Состояния Popular Progress Bar
             when (loadState.source.refresh) {
-                is LoadState.Loading -> binding.popularProgressBar.visibility = View.VISIBLE
-                is LoadState.NotLoading -> binding.popularProgressBar.visibility = View.GONE
-                is LoadState.Error -> binding.popularProgressBar.visibility = View.GONE
+                is LoadState.Loading -> {
+                    binding.popularProgressBar.visibility = View.VISIBLE
+                }
+
+                is LoadState.NotLoading -> {
+                    binding.popularProgressBar.visibility = View.GONE
+                }
+
+                is LoadState.Error -> {
+                    binding.popularProgressBar.visibility = View.GONE
+                }
             }
+
+            val isListEmpty = loadState.source.refresh is LoadState.NotLoading && adapter.itemCount == 0
+            binding.rcViewPopular.isVisible = !isListEmpty
+
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -94,6 +108,7 @@ class PopularFragment : Fragment() {
         }
 
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

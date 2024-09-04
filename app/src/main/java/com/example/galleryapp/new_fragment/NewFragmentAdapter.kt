@@ -4,11 +4,13 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.compose.animation.core.animate
 import androidx.paging.PagingConfig
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.galleryapp.R
 import com.example.galleryapp.data.ResultCharacter
 import com.example.galleryapp.databinding.ItemCharacterBinding
@@ -26,6 +28,7 @@ class NewFragmentAdapter(
             Glide.with(bindingImg.root)
                 .load(character.image)
                 .placeholder(R.drawable.ic_launcher_foreground)
+                .transition(DrawableTransitionOptions.withCrossFade())
                 .error(R.drawable.ic_launcher_foreground)
                 .into(bindingImg.imageView)
 
