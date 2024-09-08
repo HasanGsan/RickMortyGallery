@@ -1,4 +1,4 @@
-package com.example.galleryapp
+package com.example.galleryapp.testing_app
 
 import org.junit.Test
 

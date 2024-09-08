@@ -1,7 +1,5 @@
-package com.example.galleryapp.popular_fragment
+package com.example.galleryapp.new_fragment.adapter
 
-import android.content.Context
-import android.net.ConnectivityManager
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -12,16 +10,12 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.galleryapp.R
 import com.example.galleryapp.data.ResultCharacter
 import com.example.galleryapp.databinding.ItemCharacterBinding
-import com.example.galleryapp.new_fragment.NewFragmentAdapter
 
-
-class PopularFragmentAdapter(
+class NewFragmentAdapter(
     private val onItemClicked: (ResultCharacter) -> Unit,
-) : PagingDataAdapter<ResultCharacter, PopularFragmentAdapter.PopularFragmentViewHolder>(
-    DiffCallback
-) {
+) : PagingDataAdapter<ResultCharacter, NewFragmentAdapter.NewFragmentViewHolder>(DiffCallback) {
 
-    inner class PopularFragmentViewHolder(private val bindingImg: ItemCharacterBinding) :
+    inner class NewFragmentViewHolder(private val bindingImg: ItemCharacterBinding) :
         RecyclerView.ViewHolder(bindingImg.root) {
 
         fun bind(character: ResultCharacter) {
@@ -35,34 +29,29 @@ class PopularFragmentAdapter(
                 .into(bindingImg.imageView)
 
 
-            bindingImg.root.setOnClickListener { //Слушатель кликов к постам
+            bindingImg.root.setOnClickListener { //Слушатель кликов
                 onItemClicked(character)
             }
 
         }
-    }
 
+    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): PopularFragmentAdapter.PopularFragmentViewHolder {
+    ): NewFragmentViewHolder {
         val binding =
             ItemCharacterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return PopularFragmentViewHolder(binding)
+        return NewFragmentViewHolder(binding)
     }
 
-    override fun onBindViewHolder(
-        holder: PopularFragmentAdapter.PopularFragmentViewHolder,
-        position: Int
-    ) {
+    override fun onBindViewHolder(holder: NewFragmentViewHolder, position: Int) {
         val character = getItem(position)
         if (character != null) {
             holder.bind(character)
         }
     }
-
-
 
     companion object DiffCallback : DiffUtil.ItemCallback<ResultCharacter>() {
         override fun areItemsTheSame(oldItem: ResultCharacter, newItem: ResultCharacter): Boolean {
@@ -75,6 +64,8 @@ class PopularFragmentAdapter(
         ): Boolean {
             return oldItem == newItem
         }
+
+
     }
 
 }

@@ -1,4 +1,4 @@
-    package com.example.galleryapp.popular_fragment.popular_paging
+    package com.example.galleryapp.popular_fragment.popularPagingSource
 
     import androidx.paging.PagingSource
     import androidx.paging.PagingState

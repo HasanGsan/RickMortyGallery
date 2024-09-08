@@ -1,6 +1,5 @@
-package com.example.galleryapp.new_fragment.new_paging
+package com.example.galleryapp.new_fragment.newPagingSource
 
-import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.galleryapp.api.ApiService
@@ -15,11 +14,10 @@ class NewPagingSource(
         val page = params.key ?: 1
 
         return try {
-            val response = apiService.getNewCharacters(name, page)
-
+            val response = apiService.getNewCharacters(name, page) //Делаем запрос в апишку
 
             if (response.isSuccessful) {
-                val characters = response.body()?.results ?: emptyList()
+                val characters = response.body()?.results ?: emptyList() // Получаем тело
                 val nextPageNumber = if (characters.isNotEmpty()) page + 1 else null
 
 

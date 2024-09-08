@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/newFragment"
-        android:name="com.example.galleryapp.new_fragment.NewFragment"
+        android:name="com.example.galleryapp.new_fragment.fragment.NewFragment"
         android:label="New"
         tools:layout="@layout/fragment_new" >
 
@@ -31,7 +31,7 @@
 
     <fragment
         android:id="@+id/popularFragment"
-        android:name="com.example.galleryapp.popular_fragment.PopularFragment"
+        android:name="com.example.galleryapp.popular_fragment.fragment.PopularFragment"
         android:label="Popular"
         tools:layout="@layout/fragment_popular" >
 

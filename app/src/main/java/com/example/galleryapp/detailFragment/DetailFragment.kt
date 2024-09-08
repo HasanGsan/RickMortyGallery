@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.example.galleryapp.R
 import com.example.galleryapp.databinding.FragmentNewBinding
@@ -51,6 +52,7 @@ class DetailFragment : Fragment() {
             Glide.with(this)
                 .load(image)
                 .placeholder(R.drawable.ic_launcher_foreground)
+                .transition(DrawableTransitionOptions.withCrossFade())
                 .into(binding.windowToImage)
 
             binding.titleWindowText.text = description

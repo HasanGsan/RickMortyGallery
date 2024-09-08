@@ -1,4 +1,4 @@
-package com.example.galleryapp.popular_fragment
+package com.example.galleryapp.popular_fragment.fragment
 
 import android.content.res.Configuration
 import android.os.Bundle
@@ -17,7 +17,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.galleryapp.R
 import com.example.galleryapp.databinding.FragmentPopularBinding
-import com.example.galleryapp.new_fragment.NewFragmentAdapter
+import com.example.galleryapp.popular_fragment.adapter.PopularFragmentAdapter
+import com.example.galleryapp.popular_fragment.viewModel.PopularViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -30,8 +31,6 @@ class PopularFragment : Fragment() {
 
     private val viewModel: PopularViewModel by viewModels()
     private lateinit var adapter: PopularFragmentAdapter
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,7 +45,7 @@ class PopularFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val spanCount =
-            if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) { //Разделение сетки по ориентации экрана
                 3
             } else {
                 2
@@ -94,7 +93,7 @@ class PopularFragment : Fragment() {
                 }
             }
 
-            val isListEmpty = loadState.source.refresh is LoadState.NotLoading && adapter.itemCount == 0
+            val isListEmpty = loadState.source.refresh is LoadState.NotLoading && adapter.itemCount == 0 //Скрываем UI если элементы не загружены
             binding.rcViewPopular.isVisible = !isListEmpty
 
         }

@@ -1,12 +1,11 @@
-package com.example.galleryapp.new_fragment
+package com.example.galleryapp.new_fragment.fragment
 
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -18,6 +17,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.galleryapp.R
 import com.example.galleryapp.databinding.FragmentNewBinding
+import com.example.galleryapp.new_fragment.adapter.NewFragmentAdapter
+import com.example.galleryapp.new_fragment.viewModel.NewViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -42,7 +43,7 @@ class NewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val spanCount = if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        val spanCount = if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) { //Разделение сетки по ориентации экрана
             3
         } else {
             2
@@ -84,8 +85,11 @@ class NewFragment : Fragment() {
                     binding.newProgressBar.visibility = View.GONE
                 }
             }
-        }
 
+            val isListEmpty = loadState.source.refresh is LoadState.NotLoading && adapter.itemCount == 0 //Скрываем UI если элементы не загружены
+            binding.rcViewNew.isVisible = !isListEmpty
+
+        }
 
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -95,11 +99,7 @@ class NewFragment : Fragment() {
                 }
             }
         }
-
-
-
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

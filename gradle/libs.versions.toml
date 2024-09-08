@@ -21,6 +21,9 @@ reactivenetworkRx2 = "3.0.0"
 retrofit = "2.11.0"
 swiperefreshlayout = "1.1.0"
 animationCoreAndroid = "1.6.8"
+junitJunit = "4.12"
+junitKtx = "1.2.1"
+monitor = "1.7.2"
 
 [libraries]
 android-gif-drawable = { module = "pl.droidsonroids.gif:android-gif-drawable", version.ref = "androidGifDrawable" }
@@ -47,6 +50,9 @@ reactivenetwork-rx2 = { module = "com.github.pwittchen:reactivenetwork-rx2", ver
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swiperefreshlayout" }
 androidx-animation-core-android = { group = "androidx.compose.animation", name = "animation-core-android", version.ref = "animationCoreAndroid" }
+junit-junit = { group = "junit", name = "junit", version.ref = "junitJunit" }
+androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junitKtx" }
+androidx-monitor = { group = "androidx.test", name = "monitor", version.ref = "monitor" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

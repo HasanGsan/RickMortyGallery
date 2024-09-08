@@ -1,9 +1,14 @@
 package com.example.galleryapp.main
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
+import android.view.WindowInsets
+import android.view.WindowInsetsController
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -32,6 +37,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var connectivityObserver: ConnectivityObserver
 
+    @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -48,13 +54,19 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        window.insetsController?.let {
+            it.systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+            it.hide(WindowInsets.Type.systemBars())
+        }
+
+        binding.bottomNavigationBar.setOnApplyWindowInsetsListener(null)
+        binding.bottomNavigationBar.setPadding(0,0,0,0)
 
         //navigation code
         val btnNavView = findViewById<BottomNavigationView>(R.id.bottom_navigation_bar)
         val controller = findNavController(R.id.fragmentContainerView)
         btnNavView.setupWithNavController(controller)
         //navigation code
-
 
         //Проверка интернета после запуска
         val currentStatus =  (connectivityObserver as NetworkConnectivityObserver)  .getCurrentStatus()
@@ -80,10 +92,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
-
-
-        //Навигационное названия на страницах
+        //Toolbar title
         setSupportActionBar(binding.customToolBar)
 
         setupActionBarWithNavController(
@@ -93,15 +102,9 @@ class MainActivity : AppCompatActivity() {
         binding.customToolBar.setNavigationOnClickListener {
             controller.popBackStack()
         }
-        //Навигационное названия на страницах
-
-
+        //Toolbar title
 
 
     }
-
-
-
-
 
 }

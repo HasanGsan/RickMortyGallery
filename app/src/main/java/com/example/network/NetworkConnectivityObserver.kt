@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 
+//Проверка на наличие интернета
 class NetworkConnectivityObserver(
     private val context: Context
 ) : ConnectivityObserver {
@@ -65,5 +66,13 @@ class NetworkConnectivityObserver(
         } catch (e: Exception) {
             ConnectivityObserver.Status.Unavailable
         }
+    }
+}
+
+interface ConnectivityObserver {
+    fun observe(): Flow<Status>
+
+    enum class Status {
+        Available, Unavailable, Losing, Lost //Состояния сети
     }
 }

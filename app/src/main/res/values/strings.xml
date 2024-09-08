@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GalleryApp</string>
+    <string name="app_name">RickMortyGallery</string>
     <string name="app_blank_new">New</string>
     <string name="app_blank_popular">Popular</string>
     <string name="popup_title">Get better - unused exploration</string>
