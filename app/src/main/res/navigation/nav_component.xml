@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/newFragment"
         android:name="com.example.galleryapp.new_fragment.fragment.NewFragment"
-        android:label="New"
+        android:label="@string/app_blank_new"
         tools:layout="@layout/fragment_new" >
 
 
@@ -32,7 +32,7 @@
     <fragment
         android:id="@+id/popularFragment"
         android:name="com.example.galleryapp.popular_fragment.fragment.PopularFragment"
-        android:label="Popular"
+        android:label="@string/app_blank_popular"
         tools:layout="@layout/fragment_popular" >
 
         <action
@@ -52,6 +52,6 @@
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.example.galleryapp.detailFragment.DetailFragment"
-        android:label="Detail"
+        android:label=""
         tools:layout="@layout/popup_window" />
 </navigation>

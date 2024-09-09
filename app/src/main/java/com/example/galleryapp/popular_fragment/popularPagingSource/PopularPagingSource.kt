@@ -7,7 +7,7 @@
 
     class PopularPagingSource(
         private val apiService: ApiService,
-        private val name: String? = "rick",
+        private val name: String? = "morty",
     ) : PagingSource<Int, ResultCharacter>() {
 
         override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ResultCharacter> {

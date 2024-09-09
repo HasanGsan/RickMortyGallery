@@ -7,7 +7,7 @@ import com.example.galleryapp.data.ResultCharacter
 
 class NewPagingSource(
     private val apiService: ApiService,
-    private val name: String? = "morty",
+    private val name: String? = "rick",
 ) : PagingSource<Int, ResultCharacter>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ResultCharacter> {
